@@ -35,11 +35,24 @@ jobs:
         
       # run tests!
       - run: yarn test
-
-      # deploy gh-pages!
-      - run: yarn run build
-      - run: git checkout gh-pages
-      - run: mv -f build/* .
-      - run: git commit -am update
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          name: Deploy gh-pages
+          command: |
+            sh scripts/deploy-ghpages.sh
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
 
