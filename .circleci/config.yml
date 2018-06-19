@@ -39,10 +39,11 @@ jobs:
     machine:
       enabled: true
     steps:
+      - checkout
       - run:
           name: Deploy gh-pages
           command: |
-            sh scripts/deploy-ghpages.sh
+            sh ./scripts/deploy-ghpages.sh
 workflows:
   version: 2
   build-and-deploy:
@@ -54,5 +55,3 @@ workflows:
           filters:
             branches:
               only: master
-
-
